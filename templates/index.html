@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>广州地铁向导</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body class="light-layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fas fa-subway"></i>
+        <h1>广州地铁向导</h1>
+      </div>
+
+      <div class="input-box">
+        <div class="input-label start">
+          <i class="fas fa-map-marker-alt"></i> 起点站
+        </div>
+        <input id="start-input" list="stations-list" placeholder="点击地图或输入站名" autocomplete="off">
+      </div>
+
+      <div class="swap-btn-container">
+        <button type="button" class="swap-btn" id="swap-btn" title="交换起终点">
+          <i class="fas fa-exchange-alt"></i>
+        </button>
+      </div>
+
+      <div class="input-box">
+        <div class="input-label end">
+          <i class="fas fa-bullseye"></i> 终点站
+        </div>
+        <input id="end-input" list="stations-list" placeholder="点击地图或输入站名" autocomplete="off">
+      </div>
+
+      <datalist id="stations-list"></datalist>
+
+      <div class="strategy">
+        <span class="input-label"><i class="fas fa-sliders-h"></i> 路线策略</span>
+        <div class="segmented">
+          <button type="button" class="active" data-strategy="stations"><span>站数最少</span></button>
+          <button type="button" data-strategy="lines"><span>换乘最少</span></button>
+        </div>
+      </div>
+
+      <button id="search-btn" class="search-btn">
+        <i class="fas fa-search-location"></i>
+        <span>规划路线</span>
+      </button>
+
+      <div class="result">
+        <h2>🎯 路线结果</h2>
+        <pre id="route-output"><div style="color: #999; font-style: italic; font-size: 13px;">💡 选择起点和终点后，点击"规划路线"查看最优路径</div></pre>
+      </div>
+
+      <div class="footer-info">
+        <i class="fas fa-heart" style="color: #764ba2;"></i> 
+        © 2025 广州地铁智能查询系统
+      </div>
+    </aside>
+
+    <main id="map-container" class="map-container" aria-label="Guangzhou Metro Map">
+      <div id="selection-popup" class="selection-popup" hidden>
+        <div class="popup-title" id="popup-station-name">站点</div>
+        <div class="popup-actions">
+          <button type="button" id="set-start">
+            <i class="fas fa-map-marker-alt"></i> 起点
+          </button>
+          <button type="button" id="set-end">
+            <i class="fas fa-bullseye"></i> 终点
+          </button>
+        </div>
+      </div>
+      <div class="zoom-controls">
+        <button type="button" id="zoom-in" title="放大"><i class="fas fa-plus"></i></button>
+        <button type="button" id="zoom-out" title="缩小"><i class="fas fa-minus"></i></button>
+        <button type="button" id="zoom-reset" title="重置"><i class="fas fa-compress-arrows-alt"></i></button>
+      </div>
+      {% include 'stations_gz1.svg' %}
+    </main>
+
+    <script src={{ url_for('static', filename='stations_gz.js') }}></script>
+    <script src={{ url_for('static', filename='front-end.js') }}></script>
+  </body>
+</html>
